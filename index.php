@@ -12,7 +12,7 @@ $sec = "300";
 echo '
 <html>
 <head>
-<meta http-equiv="refresh" content="'. $sec .' URL='.$page.'">
+<meta http-equiv="refresh" content="'. $sec .' URL='.$page.'?username='.$_GET['username'].'">
 <link rel="stylesheet" href="table.css">
 <h1 style="text-align: center">' . $heading . '</h1>
 </head>

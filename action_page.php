@@ -43,14 +43,25 @@ if ($fromtype == "login"){
 } else if ($fromtype == "signup") {
 // signup page
     
+    
+    
+    
     $uname = $_POST['email'];
     $psw = $_POST['psw'];
-	$sql = "INSERT INTO `$infotablename` (username, password) VALUES ( '$uname', '$psw');";
-
+    
+    $sql = "SELECT * FROM $infotablename WHERE username='$uname' ;";
     $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        header('Location: /CURIDE-src/login_and_signup.html?message=3');
+        // message = 3; sign up failure 
+	} else {
+    	$sql = "INSERT INTO `$infotablename` (username, password) VALUES ( '$uname', '$psw');";
+        $result = $conn->query($sql);
+        header('Location: /CURIDE-src/login_and_signup.html?message=2');
+        // message = 2, sign up success.
+	}
 
-    header('Location: /CURIDE-src/login_and_signup.html?message=2');
-    // message = 2, sign up success.
+   
 
 
 

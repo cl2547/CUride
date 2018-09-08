@@ -344,11 +344,33 @@ function show_query_result_html_table($conn, $sql, $button, $manage, $userinput,
 			// $toReturn .= '<table cellspacing="0" cellpadding="1" border="1" width="300" >';
 			while($row = $result->fetch_assoc()) {
 				$toReturn .= '<tr id="'. $i .'">';
+				// $tmp = 0;
 				foreach ($columns as $key => $value) {
 					$toReturn .= '<td width="5%" style="word-wrap: break-word" id="'.$i.$_tablename.$value.'">'. $row[$value] . '</td>';
 				}
-				if ($button){ $toReturn .= '<td width="5%" style="word-wrap: break-word" ><button type="button" align="middle" onclick="copy_js('.$i.',\''.$_tablename.'\','.strtolower($_tablename).');">Copy Info</button></td>'; }
-				$toReturn .= "</tr>";
+				if ($button){ $toReturn .= '<td width="5%" style="word-wrap: break-word" ><button type="button" align="middle" onclick="copy_js('.$i.',\''.$_tablename.'\','.strtolower($_tablename).');">Copy Info</button>'; }
+				
+				// add delete button
+				if ($_GET['username'] == $row['Name']){
+				    
+				    
+				    
+				    
+				    
+				    $toReturn .= '  <form action="'.$submitto.'" method="post">
+                                	    <fieldset style="float:right; display:none;"><legend><h3>What to do?</h3></legend>
+                                		    <input type="radio" name="database_action" value="insert" />
+                                		    <input type="radio" name="database_action" value="drop" checked/> Drop From ... <br>
+                                	    </fieldset><input type="submit" value="Delete">
+                                    </form>';
+                                    
+                                    
+                                    
+                                    
+                                    
+				} 
+				
+				$toReturn .= "</td></tr>";
 				$i += 1;
 			}
 			// $toReturn .= '</table>';
@@ -384,7 +406,9 @@ function show_query_result_array($conn, $sql, $getheader=false, $tablename="\$ta
 	$result = $conn->query($sql);
 	$gh = $getheader;
 	
+// 	echo "<br> debug in show query result array.";
 	if ($result->num_rows > 0) {
+	   // echo "<br> result is not 0 lines.";
 		$toReturn = array();
 		while($row = $result->fetch_assoc()) {
 			if ($gh and $getheader){
@@ -392,6 +416,7 @@ function show_query_result_array($conn, $sql, $getheader=false, $tablename="\$ta
 				$gh = false;
 			}
 			array_push($toReturn, array_values($row));
+
 		}
 		return $toReturn;
 	}else{
@@ -448,9 +473,15 @@ function input_form_by_name_attribute($columns, $conn, $submitto, $tablename="\$
 	</fieldset>
 
 	<br>
+	
+	
+	
 	<form action="'.$submitto.'" method="post">
-	<fieldset style="float:right;"><legend><h3>What to do?</h3></legend>
-		<input type="radio" name="database_action" value="insert" checked /> Insert Into ... 
+
+
+
+	<fieldset style="float:right; display:none;"><legend><h3>What to do?</h3></legend>
+		<input type="radio" name="database_action" value="insert" checked />
 		<input type="radio" name="database_action" value="drop" /> Drop From ... <br>
 	</fieldset>
 	<fieldset>
@@ -461,6 +492,10 @@ function input_form_by_name_attribute($columns, $conn, $submitto, $tablename="\$
   
 	foreach ($columns as $key => $value) {
 		$toReturn .= '<label>' . $value . ': </label><input type="text" name="' . $value . '" id="'. $value .'"';
+		if (array_key_exists("username", $_GET) and $value == "Name"){
+		    $toReturn .= ' value="'.$_GET['username'].'" ';
+		}
+
 		if ($value == "SharickID" or $value == "sharickid"){
 			$toReturn .= 'value="'. (getMaxSharickID($conn, $tablename)+1).'"/>';
 		} else {
