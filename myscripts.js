@@ -22,6 +22,12 @@ function displaySignUp() {
 
 window.onload = function() {
     if(window.location.href.indexOf("message=1") > -1) {
-       alert("make sure your entered a correct password");
+       alert("Make sure your entered a correct password");
+    }
+    if(window.location.href.indexOf("message=2") > -1) {
+       alert("Sign up success, please log in!");
+    }
+    if(window.location.href.indexOf("message=3") > -1) {
+       alert("Sign up failed, user name already exist!");
     }
 }
