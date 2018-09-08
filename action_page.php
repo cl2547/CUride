@@ -21,6 +21,7 @@ if ($DEBUG){	echo $fromtype;		}
 
 if ($fromtype == "login"){
 // login page	
+    
     $uname = $_POST['uname'];
 	$sql = "SELECT password FROM $infotablename WHERE username='$uname' ;";
 
@@ -28,29 +29,28 @@ if ($fromtype == "login"){
 	if ($result->num_rows > 0) {
 		$psws = array();
 		while($row = $result->fetch_assoc()) {
-		  //  print_r($row);
-			array_push($psws, $row['password']);
+		 	array_push($psws, $row['password']);
 		}
-// 		print_r($psws);
 		if (in_array($_POST['psw'], $psws)){
 		  //  echo p(1) . "login success!";
-		    header('Location: /CURIDE-src/index.php');
+		    header('Location: /CURIDE-src/index.php?username='.$uname);
 		} else {
-		  //  echo p(1) . "login failed!";
-		    header('Location: http://www.google.com/');
+		    header('Location: /CURIDE-src/login_and_signup.html?message=1');
+		    // message = 1, login failed.
 		}
 	}
 
 } else if ($fromtype == "signup") {
 // signup page
+    
     $uname = $_POST['email'];
     $psw = $_POST['psw'];
 	$sql = "INSERT INTO `$infotablename` (username, password) VALUES ( '$uname', '$psw');";
-    
-    // echo $sql;
+
     $result = $conn->query($sql);
-    // echo $result;
-    header('Location: /CURIDE-src/login_and_signup.html');
+
+    header('Location: /CURIDE-src/login_and_signup.html?message=2');
+    // message = 2, sign up success.
 
 
 
