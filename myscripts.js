@@ -1,7 +1,6 @@
 function checkPasswordMatch() {
     var password = $("#psw").val();
     var confirmPassword = $("#psw-repeat").val();
-
     if (password != confirmPassword)
         $("#divCheckPasswordMatch").html("Passwords do not match!");
     else
