@@ -1,6 +1,6 @@
 <?php
 
-$DEBUG = True; 
+$DEBUG = False; 
 include "utility_function.php";
 include "tablename_var.php";
 
@@ -9,10 +9,11 @@ include "tablename_var.php";
 // $infopassword = "asdf1234";
 // $infodbname = "id6885213_user_info";
 $infotablename = "user_info";
+$infocolumns = ["username", "password"];
 
 // $conn = connect_to_server($infoservername, $infousername, $infopassword, True); // debug == false
 // mysqli_select_db($conn, $infodbname);                      /* Connect to database */
-$conn = connect_to_server($servername, $username, $password, True); // debug == false
+$conn = connect_to_server($servername, $username, $password, False); // debug == false
 mysqli_select_db($conn, $dbname);                      /* Connect to database */
 
 $fromtype = $_POST['fromtype'];
@@ -20,10 +21,36 @@ if ($DEBUG){	echo $fromtype;		}
 
 if ($fromtype == "login"){
 // login page	
-	$sql = "SELECT password FROM $infotablename WHERE username=;";
+    $uname = $_POST['uname'];
+	$sql = "SELECT password FROM $infotablename WHERE username='$uname' ;";
+
+    $result = $conn->query($sql);
+	if ($result->num_rows > 0) {
+		$psws = array();
+		while($row = $result->fetch_assoc()) {
+		  //  print_r($row);
+			array_push($psws, $row['password']);
+		}
+// 		print_r($psws);
+		if (in_array($_POST['psw'], $psws)){
+		  //  echo p(1) . "login success!";
+		    header('Location: /CURIDE-src/index.php');
+		} else {
+		  //  echo p(1) . "login failed!";
+		    header('Location: http://www.google.com/');
+		}
+	}
 
 } else if ($fromtype == "signup") {
 // signup page
+    $uname = $_POST['email'];
+    $psw = $_POST['psw'];
+	$sql = "INSERT INTO `$infotablename` (username, password) VALUES ( '$uname', '$psw');";
+    
+    // echo $sql;
+    $result = $conn->query($sql);
+    // echo $result;
+    header('Location: /CURIDE-src/login_and_signup.html');
 
 
 
