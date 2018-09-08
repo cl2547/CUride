@@ -19,3 +19,9 @@ function displaySignUp() {
 	document.getElementById('id01').style.display='block'
     document.getElementById("signupbtn").disabled = true;
 }
+
+window.onload = function() {
+    if(window.location.href.indexOf("message=1") > -1) {
+       alert("make sure your entered a correct password");
+    }
+}
