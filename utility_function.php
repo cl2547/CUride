@@ -29,7 +29,7 @@ function p($intt){
 // $password = "";
 // $dbname = "board";
 
-$heading = "CU Ride Information Exchange";
+$heading = "CU Ride Information Exchange [Still Testing]";
 
 $servername = "localhost";
 $username = "id6885213_sx243";
@@ -84,7 +84,7 @@ function action_on_row_if_ok($conn, $columns, $tablename, $action){
 				echo "Default switch. ";
 				break;
 		}
-		query_and_Feedback($conn, $sql);
+		query_and_Feedback($conn, $sql, False);
 	}else{
 		echo "Error in insert_row_if_ok(\$conn, \$columns) function.";
 	}
@@ -345,8 +345,11 @@ function show_query_result_html_table($conn, $sql, $button, $manage, $userinput,
 			while($row = $result->fetch_assoc()) {
 				$toReturn .= '<tr id="'. $i .'">';
 				// $tmp = 0;
+				$dummyinputform = '';
 				foreach ($columns as $key => $value) {
+				    // $xx = 
 					$toReturn .= '<td width="5%" style="word-wrap: break-word" id="'.$i.$_tablename.$value.'">'. $row[$value] . '</td>';
+					$dummyinputform .= '<input type="text" name="'.$value.'" value="'.$row[$value].'" />';
 				}
 				if ($button){ $toReturn .= '<td width="5%" style="word-wrap: break-word" ><button type="button" align="middle" onclick="copy_js('.$i.',\''.$_tablename.'\','.strtolower($_tablename).');">Copy Info</button>'; }
 				
@@ -357,11 +360,13 @@ function show_query_result_html_table($conn, $sql, $button, $manage, $userinput,
 				    
 				    
 				    
-				    $toReturn .= '  <form action="'.$submitto.'" method="post">
+				    $toReturn .= '  <form action="/CURIDE-src/dbaction.php" method="post">
                                 	    <fieldset style="float:right; display:none;"><legend><h3>What to do?</h3></legend>
-                                		    <input type="radio" name="database_action" value="insert" />
-                                		    <input type="radio" name="database_action" value="drop" checked/> Drop From ... <br>
-                                	    </fieldset><input type="submit" value="Delete">
+                                	    ';
+                    $toReturn .=        $dummyinputform;
+                    $toReturn .= '      <input type="radio" name="database_action" value="drop" checked/>
+                                	    </fieldset>
+                                	    <input type="submit" value="Delete">
                                     </form>';
                                     
                                     
