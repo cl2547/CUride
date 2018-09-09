@@ -1,6 +1,6 @@
 # CUride
-Version 0.1: The first launchable version.
-  Functions:
+Version 0.1: The first launchable version. <br>
+  Functions: <br>
     1. Sign Up an accout (including checking existence, password matching, ... etc).
     2. Login in the account.
     3. Insert data by either offering or asking.
