@@ -56,6 +56,3 @@ window.onload = function() {
        alert("Log in failed, user name not exist!");
     }
 }
-
-
-// check for the email validity
