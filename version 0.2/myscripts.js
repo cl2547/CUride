@@ -1,3 +1,4 @@
+// check if two passwords are the same during sign up
 function checkPasswordMatch() {
     var password = $("#psw").val();
     var confirmPassword = $("#psw-repeat").val();
@@ -10,16 +11,37 @@ function checkPasswordMatch() {
         document.getElementById("signupbtn").disabled = false;
     }
 }
+// helper function for email validity during sign up
+function validateEmail(email) {
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+
+// check email validity during sign up
+function checkEmailFormat(){
+  var $result = $("#result");
+  var email = $("#email").val();
+  if (validateEmail(email)) {
+    $result.text(email + " is valid :)");
+    $result.css("color", "green");
+  } else {
+    $result.text(email + " is not valid :(");
+    $result.css("color", "red");
+  }
+} 
 
 $(document).ready(function () {
    $("#psw, #psw-repeat").keyup(checkPasswordMatch);
+   $("#email").keyup(checkEmailFormat);
 });
 
+// block user from clicking signing up
 function displaySignUp() {
-	document.getElementById('id01').style.display='block'
-    document.getElementById("signupbtn").disabled = true;
+	document.getElementById('id01').style.display='block';
+  document.getElementById("signupbtn").disabled = true;
 }
 
+// decide which pop up window to appear after signing up
 window.onload = function() {
     if(window.location.href.indexOf("message=1") > -1) {
        alert("Make sure your entered a correct password");
@@ -34,3 +56,6 @@ window.onload = function() {
        alert("Log in failed, user name not exist!");
     }
 }
+
+
+// check for the email validity
