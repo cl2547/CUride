@@ -56,3 +56,5 @@ window.onload = function() {
        alert("Log in failed, user name not exist!");
     }
 }
+
+// email verification

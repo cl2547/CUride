@@ -62,9 +62,17 @@
       <h1>Sign Up</h1>
       <p>Please fill in this form to create an account.</p>
       <hr>
+      <label for="name"><b>Name</b></label>
+      <input type="text" placeholder="Enter Your Name" id = "name" name="name" required>
+
       <label for="email"><b>Email</b></label>
       <input type="text" placeholder="Enter Email" id = "email" name="email" required>
-      <h5 id='result'></h5>
+      <p id='result'></p>
+
+      <button type="button" class="verifybtn">Verify (Please check your email and enter the verfication code. You need to verify your email to continue.)</button>
+      <label for="Verification code"><b>Verifcation Code</b></label>
+      <input type="text" placeholder="Enter Verificatoin Code" id = "verificationCode" name="verificationCode" required>
+      
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
 
