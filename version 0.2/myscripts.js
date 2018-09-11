@@ -11,6 +11,7 @@ function checkPasswordMatch() {
         document.getElementById("signupbtn").disabled = false;
     }
 }
+
 // helper function for email validity during sign up
 function validateEmail(email) {
   var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -35,10 +36,18 @@ $(document).ready(function () {
    $("#email").keyup(checkEmailFormat);
 });
 
+// email verification, generate random verification code first
+function generateVerificationCode(){
+  var num = Math.floor(Math.random() * 900000) + 100000;
+  $("#result").text(num)
+}
+
 // block user from clicking signing up
 function displaySignUp() {
 	document.getElementById('id01').style.display='block';
   document.getElementById("signupbtn").disabled = true;
+  document.getElementById('id01').style.display='block';
+  generateVerificationCode();
 }
 
 // decide which pop up window to appear after signing up
@@ -57,4 +66,6 @@ window.onload = function() {
     }
 }
 
-// email verification
+
+
+
