@@ -6,6 +6,7 @@
 
     <script src="jquery-3.3.1.min.js"></script>
     <script src="myscripts.js"></script>
+    <script src="email.js"></script>
 </head>
 <body>
 
@@ -69,8 +70,8 @@
       <input type="text" placeholder="Enter Email" id = "email" name="email" required>
       <p id='result'></p>
 
-      <button type="button" class="verifybtn">Verify (Please check your email and enter the verfication code. You need to verify your email to continue.)</button>
-      <label for="Verification code"><b>Verifcation Code</b></label><p display='block'></p>
+      <button type="button" class="verifybtn" onclick="sendEmail()">Verify (Please check your email and enter the verfication code. You need to verify your email to continue.)</button>
+      <label for="Verification code"><b>Verifcation Code</b></label><p display='none' id = 'code'></p>
       <input type="text" placeholder="Enter Verificatoin Code" id = "verificationCode" name="verificationCode" required>
       
       <label for="psw"><b>Password</b></label>

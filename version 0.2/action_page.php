@@ -38,10 +38,11 @@ if ($fromtype == "login"){
 	}
 
 } else if ($fromtype == "signup") {
-// signup page
+// signup page, record info of name, email and psw and send to db
 
-    $uname = $_POST['email'];
+    $uname = $_POST['email'];  //this is email address
     $psw = $_POST['psw'];
+    $name = $_POST['name'] //this is account name
     
     $sql = "SELECT * FROM $infotablename WHERE username='$uname' ;";
     $result = $conn->query($sql);

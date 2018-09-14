@@ -39,7 +39,7 @@ $(document).ready(function () {
 // email verification, generate random verification code first
 function generateVerificationCode(){
   var num = Math.floor(Math.random() * 900000) + 100000;
-  $("#result").text(num)
+  // $("#result").text(num)
 }
 
 // block user from clicking signing up
