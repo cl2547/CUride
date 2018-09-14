@@ -1,9 +1,3 @@
-var clientId = '424885657192-hbj0gnaf8cidud73fnmf016e7ncvtmpd.apps.googleusercontent.com';
-var apiKey = 'AIzaSyCDA3DKHBDA_8aKGnTiepDqWmdmAhtm7SM';
-var scopes =
-  'https://www.googleapis.com/auth/gmail.readonly '+
-  'https://www.googleapis.com/auth/gmail.send';
-
 function loadGmailApi() {
   gapi.client.load('gmail', 'v1', displayInbox);
 }
