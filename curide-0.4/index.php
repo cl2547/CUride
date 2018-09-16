@@ -12,7 +12,6 @@ $toReturn .= '<!DOCTYPE html>
     <script src="jquery-3.3.1.min.js"></script>
     <script src="myscripts.js"></script>
     <script src="https://smtpjs.com/v2/smtp.js">
-    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
 </head>
 <body>
 

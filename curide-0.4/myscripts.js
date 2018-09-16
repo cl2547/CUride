@@ -44,7 +44,7 @@ function generateVerificationCode(){
 
 // block user from clicking signing up
 function displaySignUp() {
-	document.getElementById('id01').style.display='block';
+  document.getElementById('id01').style.display='block';
   document.getElementById("signupbtn").disabled = true;
   document.getElementById('id01').style.display='block';
   generateVerificationCode()
@@ -66,6 +66,20 @@ window.onload = function() {
     }
 }
 
+  //send email verificateion
+  function sendEmail(){ 
+    des = $('#email').val()  //address to send to
+    code = $('#code').text(); //verification code
+    console.log("test!")
+    Email.send("curide.customerservice@gmail.com",
+            des,
+            "[DO NOT REPLY] CU Ride: Verification code",
+            "The code is: " +code +"\n\n Yours",
+            "smtp.gmail.com",
+            'curide.customerservice@gmail.com' ,
+            'xiangshiyi');
+    console.log('Done');
+  }
 
 
 
