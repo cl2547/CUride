@@ -67,7 +67,7 @@ $toReturn .= '
       <div class="registrationFormAlert" id="result"></div>
 
       <button type="button" class="verifybtn" onclick="sendEmail()">Verify (Please check your email and enter the verfication code. You need to verify your email to continue.)</button>
-      <label for="Verification code"><b>Verifcation Code</b></label><p display="none" id = "code"></p>
+      <label for="Verification code"><b>Verifcation Code</b></label><p style="display:none" id = "code"></p>
       <input type="text" placeholder="Enter Verificatoin Code" id = "verificationCode" name="verificationCode" required>
       <div class="registrationFormAlert" id="divCheckVerificationCodeMatch"></div>
       <label for="psw"><b>Password</b></label>
