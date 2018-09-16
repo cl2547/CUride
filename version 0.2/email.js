@@ -1,7 +1,26 @@
 function loadGmailApi() {
-  gapi.client.load('gmail', 'v1', displayInbox);
+  gapi.client.load('gmail', 'v1');
 }
 
+// function displayInbox() {
+//         var request = gapi.client.gmail.users.messages.list({
+//           'userId': 'me',
+//           'labelIds': 'INBOX',
+//           'maxResults': 10
+//         });
+//         request.execute(function(response) {
+//           $.each(response.messages, function() {
+//             var messageRequest = gapi.client.gmail.users.messages.get({
+//               'userId': 'me',
+//               'id': this.id
+//             });
+//             messageRequest.execute(appendMessageRow);
+//           });
+//         });
+//       }
+
+var clientId = '424885657192-0l5e8hqq3s6ekeac8sd8e4jgt510sg2r.apps.googleusercontent.com';
+var apiKey = 'AIzaSyAd42WZQXn-iwmDXW38zjY0XhO3-fH5k7Q';
 
 var scopes =
   'https://www.googleapis.com/auth/gmail.readonly '+
@@ -32,21 +51,16 @@ function handleAuthClick() {
 function handleAuthResult(authResult) {
   if(authResult && !authResult.error) {
     loadGmailApi();
-    $('#authorize-button').remove();
-    $('.table-inbox').removeClass("hidden");
-    $('#compose-button').removeClass("hidden");
   } else {
-    $('#authorize-button').removeClass("hidden");
-    $('#authorize-button').on('click', function(){
       handleAuthClick();
-    });
+    };
   }
-}
 
-function loadGmailApi() {
-  gapi.client.load('gmail', 'v1', displayInbox);
-}
 
+function getVerificationCode(){
+  code = $('#code').text();
+  return code;
+}
 function sendEmail()
 {
   sendMessage(
@@ -54,7 +68,7 @@ function sendEmail()
       'To': $('#email').val(),
       'Subject': 'Please verify your email'
     },
-    'Your access code is: ' + $('#verificationCode')
+    'Your access code is: ' + getVerificationCode()
   );
 
   return false;

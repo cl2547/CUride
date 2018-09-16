@@ -39,7 +39,8 @@ $(document).ready(function () {
 // email verification, generate random verification code first
 function generateVerificationCode(){
   var num = Math.floor(Math.random() * 900000) + 100000;
-  // $("#result").text(num)
+  document.getElementById("code").innerHTML = num;
+  document.getElementById('code').style.display='none';
 }
 
 // block user from clicking signing up
@@ -47,7 +48,7 @@ function displaySignUp() {
 	document.getElementById('id01').style.display='block';
   document.getElementById("signupbtn").disabled = true;
   document.getElementById('id01').style.display='block';
-  generateVerificationCode();
+  generateVerificationCode()
 }
 
 // decide which pop up window to appear after signing up

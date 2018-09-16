@@ -66,6 +66,28 @@ window.onload = function() {
     }
 }
 
+  // call the python 
+  function sendEmail(){ 
+    des = $('#email').val()  //address to send to
+    code = $('#code').text(); //verification code
+    console.log("test!")
+    result = runPyScript(des, code);
+    console.log('Got back ' + result);
+  }
 
+  function runPyScript(des, code){
+        var jqXHR = $.ajax({
+            type: "POST",
+            url: "/sendEmail",
+            async: false,
+            data: {email: des, code: code }
+        });
 
+        if (jqXHR.responseText){
+          console.log("successful called sendEmail.py")
+        }else{
+          console.log("failed")
+        }
+
+    }
 
