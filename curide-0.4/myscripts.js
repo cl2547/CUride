@@ -39,7 +39,7 @@ $(document).ready(function () {
 // email verification, generate random verification code first
 function generateVerificationCode(){
   var num = Math.floor(Math.random() * 900000) + 100000;
-  $("#code").text(num)
+  return num
 }
 
 // block user from clicking signing up
@@ -47,7 +47,6 @@ function displaySignUp() {
   document.getElementById('id01').style.display='block';
   document.getElementById("signupbtn").disabled = true;
   document.getElementById('id01').style.display='block';
-  generateVerificationCode()
 }
 
 // decide which pop up window to appear after signing up
@@ -69,7 +68,7 @@ window.onload = function() {
   //send email verificateion
   function sendEmail(){ 
     des = $('#email').val()  //address to send to
-    code = $('#code').text(); //verification code
+    code = generateVerificationCode(); //verification code
     console.log("test!")
     Email.send("curide.customerservice@gmail.com",
             des,
