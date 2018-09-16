@@ -4,18 +4,28 @@ function checkPasswordMatch() {
     var confirmPassword = $("#psw-repeat").val();
     if (password != confirmPassword){
         $("#divCheckPasswordMatch").html("Passwords do not match!");
+        $("#divCheckPasswordMatch").css("color", "red");
         document.getElementById("signupbtn").disabled = true;
-    }
-    else{
+    }else{
         $("#divCheckPasswordMatch").html("Passwords match.");
         document.getElementById("signupbtn").disabled = false;
+        $("#divCheckPasswordMatch").css("color", "green");
     }
 }
 
-// helper function for email validity during sign up
-function validateEmail(email) {
-  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(email);
+//check if the verifcation code is the same
+function checkVerficationCodeMatch(){
+  var entered = $("#verificationCode").val();
+  var code = $("#code").text()
+  if (entered != code){
+    $("#divCheckVerificationCodeMatch").html("Verification code is not correct");
+    $("#divCheckVerificationCodeMatch").css("color", "red");
+    document.getElementById("signupbtn").disabled = true;
+  }else{
+    $("#divCheckVerificationCodeMatch").html("Verification code is correct.");
+    document.getElementById("signupbtn").disabled = false;
+    $("#divCheckVerificationCodeMatch").css("color", "green");
+  }
 }
 
 // check email validity during sign up
@@ -23,22 +33,31 @@ function checkEmailFormat(){
   var $result = $("#result");
   var email = $("#email").val();
   if (validateEmail(email)) {
-    $result.text(email + " is valid :)");
+    $result.html(email + " is valid :)");
     $result.css("color", "green");
   } else {
-    $result.text(email + " is not valid :(");
+    $result.html(email + " is not valid :(");
     $result.css("color", "red");
   }
 } 
+// helper function for email validity during sign up
+function validateEmail(email) {
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
 
 $(document).ready(function () {
    $("#psw, #psw-repeat").keyup(checkPasswordMatch);
+   $("#verificationCode").keyup(checkVerficationCodeMatch);
    $("#email").keyup(checkEmailFormat);
 });
 
 // email verification, generate random verification code first
 function generateVerificationCode(){
   var num = Math.floor(Math.random() * 900000) + 100000;
+  $("#code").text(num);
+  $("#code").display='none';
+  document.getElementById('code').style.display='none'; 
   return num
 }
 
@@ -66,18 +85,23 @@ window.onload = function() {
 }
 
   //send email verificateion
-  function sendEmail(){ 
-    des = $('#email').val()  //address to send to
-    code = generateVerificationCode(); //verification code
-    console.log("test!")
-    Email.send("curide.customerservice@gmail.com",
-            des,
-            "[DO NOT REPLY] CU Ride: Verification code",
-            "The code is: " +code +"\n\n Yours",
-            "smtp.gmail.com",
-            'curide.customerservice@gmail.com' ,
-            'xiangshiyi');
-    console.log('Done');
+  function sendEmail(){
+    var email = $("#email").val();
+    if (validateEmail(email)){
+      des = $('#email').val()  //address to send to
+      code = generateVerificationCode(); //verification code
+      // console.log("test!")
+      Email.send("curide.customerservice@gmail.com",
+              des,
+              "[DO NOT REPLY] CU Ride: Verification code",
+              "The code is: " +code +"\n\n Yours",
+              "smtp.gmail.com",
+              'curide.customerservice@gmail.com' ,
+              'xiangshiyi');
+      // console.log('Done');
+    }else{
+      alert("Please make sure your email is valid before verification!");
+    }
   }
 
 

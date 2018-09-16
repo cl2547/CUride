@@ -59,17 +59,17 @@ $toReturn .= '
       <h1>Sign Up</h1>
       <p>Please fill in this form to create an account.</p>
       <hr>
-      <label for="name"><b>Name</b></label> 
-      <input type="text" placeholder="Enter Your Name" id = "name" name="name" required>
+      <label for="name"><b>Full Name</b></label> 
+      <input type="text" placeholder="Enter Your Full Name" id = "name" name="name" required>
 
       <label for="email"><b>Email</b></label>
       <input type="text" placeholder="Enter Email" id = "email" name="email" required>
-      <p id="result"></p>
+      <div class="registrationFormAlert" id="result"></div>
 
       <button type="button" class="verifybtn" onclick="sendEmail()">Verify (Please check your email and enter the verfication code. You need to verify your email to continue.)</button>
       <label for="Verification code"><b>Verifcation Code</b></label><p display="none" id = "code"></p>
       <input type="text" placeholder="Enter Verificatoin Code" id = "verificationCode" name="verificationCode" required>
-      
+      <div class="registrationFormAlert" id="divCheckVerificationCodeMatch"></div>
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
 
