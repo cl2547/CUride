@@ -2,6 +2,22 @@ caption, h1, h2{
 	text-align: center;
 }
 
+input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+
+/*for login*/
+input:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
 
 
 
@@ -22,10 +38,10 @@ table td, th {
 	
     
 }
-table#Ask_board th{
+table#Ask_board th, button#ask_button{
 	background-color: #3498DB;
 }
-table#Offer_board th{
+table#Offer_board th, button#offer_button{
 	background-color: #FFFF00;
 }
 
@@ -36,25 +52,19 @@ table td{
     /*background-color: #FFFF00;*/
 }
 
-button.enroll {
-    background-color: #4CAF50;
-    color: white;
+button.upabove {
+    /*background-color: #4CAF50;*/
+    /*color: white;*/
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 100%;
+    width: 33%;
     font-size: 24;
-}
-button.upabove {
-	width: 50%;
-	float: right;
-}
-
-button.observe {
-	background-color: #3498DB;
 	float: left;
 }
+
+
 
 
 #delete_action_img {
@@ -66,4 +76,8 @@ button.observe {
 	width: 54px;
 	height: 42px;
 	float: right;
+}
+
+#result_area {
+	display: block;
 }

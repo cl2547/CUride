@@ -84,25 +84,25 @@ window.onload = function() {
     }
 }
 
-  //send email verificateion
-  function sendEmail(){
-    var email = $("#email").val();
-    if (validateEmail(email)){
-      des = $('#email').val()  //address to send to
-      code = generateVerificationCode(); //verification code
-      // console.log("test!")
-      Email.send("curide.customerservice@gmail.com",
-              des,
-              "[DO NOT REPLY] CU Ride: Verification code",
-              "The code is: " +code +"\n\n Yours",
-              "smtp.gmail.com",
-              'curide.customerservice@gmail.com' ,
-              'xiangshiyi');
-      // console.log('Done');
-    }else{
-      alert("Please make sure your email is valid before verification!");
-    }
+//send email verificateion
+function sendEmail(){
+  var email = $("#email").val();
+  if (validateEmail(email)){
+    des = $('#email').val()  //address to send to
+    code = generateVerificationCode(); //verification code
+    // console.log("test!")
+    Email.send("curide.customerservice@gmail.com",
+            des,
+            "[DO NOT REPLY] CU Ride: Verification code",
+            "The code is: " +code +"\n\n Yours",
+            "smtp.gmail.com",
+            'curide.customerservice@gmail.com' ,
+            'xiangshiyi');
+    // console.log('Done');
+  }else{
+    alert("Please make sure your email is valid before verification!");
   }
+}
 
 
 

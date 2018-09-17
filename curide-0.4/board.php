@@ -1,5 +1,7 @@
 <?php  
-// All in one. 
+
+session_start();
+
 set_time_limit(30);
 $time_start = microtime(true);// Testing script runing time. 
 // sleep(1);
@@ -14,7 +16,7 @@ $sec = "300";
 echo '
 <html>
 	<head>
-		<meta http-equiv="refresh" content="'. $sec .' URL=\''.$page.'?username='.$_GET['username'].'\'">
+		<meta http-equiv="refresh" content="'. $sec .' URL=\''.$page.'?username='.$_SESSION['username'].'\'">
 		<link rel="stylesheet" href="table.css">
 		<h1>' . $heading . '</h1>
 	</head>
@@ -40,7 +42,7 @@ if (array_key_exists("database_action", $_POST)){
 }
 
 /* print new result and new form. */
-echo input_form_by_name_attribute($columns, ($board."?username=".$_GET['username']), $datatablename);/* Input form */
+echo input_form_by_name_attribute($columns, $board, $datatablename);/* Input form */
 
 /* customized column grab for database. */
 $ca = array();
@@ -54,7 +56,7 @@ foreach($columns as $v){
 $ca = join(",", $ca);
 
 
-echo "<div>";
+echo '<div id="result_area">';
 $sql = "SELECT $ca FROM `$datatablename` WHERE Type='ask' ORDER BY SubmitTime DESC";
 echo show_query_result_html_table($conn, $sql, "Ask $datatablename");
 
@@ -62,7 +64,7 @@ echo show_query_result_html_table($conn, $sql, "Ask $datatablename");
 
 $sql = "SELECT $ca FROM `$datatablename` WHERE Type='offer' ORDER BY SubmitTime DESC";
 echo show_query_result_html_table($conn, $sql, "Offer $datatablename");
-echo "</div>";
+echo '</div>';
 
 
 // 

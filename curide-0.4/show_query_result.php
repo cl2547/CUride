@@ -1,5 +1,7 @@
 <?php
 
+// session_start();
+
 include_once "utility_function.php";
 // include_once "config.php";
 
@@ -77,14 +79,14 @@ function show_query_result_html_table($conn, $sql, $tabledisplayname="\$tablenam
 					                ');" />'; 
 				
 				// add delete button
-				if ($_GET['username'] == $row['Name']){
+				if ($_SESSION['username'] == $row['Name']){
 				    	    
-				    $toReturn .= '	<form action="'.$GLOBALS['rootpath']. $GLOBALS['actionboard']. '?username='.$_GET['username'].'" method="post">
+				    $toReturn .= '	<form action="'.$GLOBALS['rootpath']. $GLOBALS['actionboard'].'" method="post">
                                 	    <fieldset style="display:none;">';
                     $toReturn .=            $dummyinputform;
                     $toReturn .= '          <input type="radio" name="database_action" value="drop" checked/>
                                 	    </fieldset>
-                                	    <input type="image" id="delete_action_img" src="'.$GLOBALS['rootpath'].'/Delete.png" alt="Submit Form" />
+                                	    <input type="image" id="delete_action_img" src="'.$GLOBALS['rootpath'].'Delete.png" alt="Submit Form" />
                                     </form>';                
 				} 
 				

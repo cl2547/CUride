@@ -7,11 +7,6 @@ function copy_js(intt, tablename, arr){
 		document.getElementById(arr[i]).value = document.getElementById(intt+tablename+arr[i]).innerHTML;
 	}
 }
-function clear_js(arr){
-	for (var i = arr.length - 1; i >= 0; i--) {
-		document.getElementById(arr[i]).value = "";
-	} 
-}
 
 
 // Part 4
@@ -112,3 +107,6 @@ function clock() {// We create a new Date object and assign it to a variable cal
 
 }
 setInterval(clock, 1000);
+
+
+

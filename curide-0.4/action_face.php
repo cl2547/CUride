@@ -1,12 +1,12 @@
 <?php
 
-
+session_start();
 
 include_once "show_query_result.php";
 include_once "tablename_var.php";
 include_once "config.php";
 
-$infocolumns = ["username", "password"];
+$infocolumns = ["username", "password", "verificationCode"];
 
 $conn = connect_to_server($servername, $username, $password); // debug == false
 mysqli_select_db($conn, $dbname);                      /* Connect to database */
@@ -19,7 +19,8 @@ if ($fromtype == "login"){
 // login page	
     
     $uname = $_POST['uname'];
-	$sql = "SELECT password FROM $infotablename WHERE username='$uname' ;";
+	$sql = "SELECT password FROM $infotablename 
+			WHERE username='$uname' ;";
 
     $result = $conn->query($sql);
 	if ($result->num_rows > 0) {
@@ -28,8 +29,9 @@ if ($fromtype == "login"){
 		 	array_push($psws, $row['password']);
 		}
 		if (in_array($_POST['psw'], $psws)){
-		  //  echo p(1) . "login success!";
-		    header('Location: '. $rootpath . $board . '?username='.$uname);
+			$_SESSION['username'] = $uname;
+		    header('Location: '. $rootpath . $board );
+		    // no message, login success.
 		} else {
 		    header('Location: '. $rootpath . $face . '?message=1');
 		    // message = 1, login failed.
@@ -42,60 +44,33 @@ if ($fromtype == "login"){
 } else if ($fromtype == "signup") {
 // signup page
 
+	$nickname = $_POST['name'];
     $uname = $_POST['email'];
     $psw = $_POST['psw'];
-    
-    $sql = "SELECT * FROM $infotablename WHERE username='$uname' ;";
+    $vcode = $_POST['verificationCode'];
+
+    $sql = "SELECT * FROM $infotablename 
+    		WHERE username='$uname' ;";
+
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         header('Location: '. $rootpath . $face . '?message=3');
-        // message = 3; sign up failure 
+        // message = 3; sign up failure, email already exists. 
 	} else {
-    	$sql = "INSERT INTO `$infotablename` (username, password) VALUES ( '$uname', '$psw');";
+    	$sql = "INSERT INTO `$infotablename` (username, password, verificationCode) 
+    			VALUES ( '$uname', '$psw', '$vcode');";
         $result = $conn->query($sql);
         header('Location: '. $rootpath . $face . '?message=2');
         // message = 2, sign up success.
 	}
 
-   
-
-
-
 } else {
 
 }
 
-
-
-$sql = "SELECT * FROM $fromwhere WHERE 0;";
-$result = $conn->query($sql);
-$columns = _fetch_fields($result);
-
-
-
-
-
-
 $loginvar = ['uname', 'psw'];
-$signupvar = ['email', 'psw', 'psw-repeat'] ;
+$signupvar = ['name', 'email', 'verificationCode', 'psw', 'psw-repeat'] ;
 
-
-echo "
-<pre>
-
-
-Copyright Issue.
-Sharick Xiang
-2017-02-08
-
-
-</pre>
-";
-
-// 
-// Step 5: Leave database
-// 
 $conn->close();
-
 
 ?>
