@@ -1,84 +1,188 @@
-<?php  
-
-session_start();
-
-set_time_limit(30);
-$time_start = microtime(true);// Testing script runing time. 
-// sleep(1);
-
-include_once "config.php";
-include_once "utility_function.php";
-include_once "show_query_result.php";
-include_once "show_input_form.php";
- 
-$page = $_SERVER['PHP_SELF'];
-$sec = "300";
-echo '
+<?php session_start(); ?>
 <html>
 	<head>
-		<meta http-equiv="refresh" content="'. $sec .' URL=\''.$page.'?username='.$_SESSION['username'].'\'">
+		<meta http-equiv="refresh" content="200 URL=./board.php">
 		<link rel="stylesheet" href="table.css">
-		<h1>' . $heading . '</h1>
+		<h1>CU Ride Information Exchange [Still Testing]</h1>
 	</head>
-<body>
+	<body>
 	<script type="text/javascript" src="./sharicknote.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<p style="text-align: center;">The website is refreshed every '.$sec.' seconds. You may press F5 to get most up to date result.</p>';
+	<script>
+		$(document).ready(function(){
+		    // first three button
+		    $("#ask_button").click(function(){
+		        $("#Offer_board").fadeOut();
+		        $("#Ask_board").fadeIn();
+		        $("#Ask_board").css("width", "100%");
+		    });
+		    $("#overall_button").click(function(){
+		        $("#Offer_board").fadeIn();
+		        $("#Offer_board").css("width","49.9%");
+		        $("#Ask_board").fadeIn();
+		        $("#Ask_board").css("width","49.9%");
+		    });
+		    $("#offer_button").click(function(){
+		        $("#Ask_board").fadeOut();
+		        $("#Offer_board").fadeIn();
+		        $("#Offer_board").css("width","100%");
+		    });
 
-$conn = connect_to_server($servername, $username, $password); // debug in cofig.php
-mysqli_select_db($conn, $dbname);                      /* Connect to database */
+		    // next three button
+		    $("#clearbtn").click(function() {
+		    	$('#inputform').trigger("reset");
+		    });    
+		    $("#typebtn").click(function() {
+		    	askofferchange();
+		    });    
 
-/* only difference */
+		});
+	</script>
+	
+	<div>
+		<p style="text-align: center;">
+			The website is refreshed every 200 seconds. You may press F5 to get most up to date result.
+		</p>
+	</div>
+	<div style="text-align:center;">
+		<button class="upabove" type="button" id="ask_button">Ask board</button>	
+		<button class="upabove" type="button" id="overall_button">Overall</button>	
+		<button class="upabove" type="button" id="offer_button">Offer board</button>
+    </div>
+	
+	<form action="board.php" id="inputform" method="post">
 
-$sql = "SELECT * FROM $datatablename WHERE 0;";
-$result = $conn->query($sql);
-$columns = _fetch_fields($result);
+		<div id="inputfields">
 
-// print_r($columns);
+			<fieldset><legend>Personal Information</legend>
+				<label>Name: </label><input name="Name" id="Name" value="asdf" type="text" readonly=1>
+			</fieldset>
+			<fieldset><legend>Contact Information</legend>
+				<table id="ContactInfoTable">
+					<thead></thead>
+					<tbody>
+						<tr>
+							<td><label>Phone: </label></td>
+							<td><label>Wechat: </label></td>
+							<td><label>Email: </label></td>
+						</tr>
+						<tr>
+							<td><input name="Phone" id="Phone" type="text" /></td>
+							<td><input name="Wechat" id="Wechat" type="text" /></td>
+							<td><input name="Email" id="Email" type="email" /></td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+			<fieldset><legend>Trip Information</legend>
+				<table id="ContactInfoTable">
+					<thead>
+						<tr>
+							<th style="width: 15%;"></th>
+							<th style="width: 65%;"></th>
+							<th style="width: 20%;"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td rowspan="7" id="clearbtn">Clear Button</td>
+							<td><label>Date: </label><input name="Date" id="Date" type="date" required=1 /></td>
+							<td rowspan="3" id="typebtn">Choose Your Type</td>
+						</tr>
+						<tr>
+							<td><label>Time: </label><input name="Time" id="Time" type="text" /></td>
+						</tr>
+						<tr>
+							<td><label>From: </label><input name="FromCity" id="FromCity" type="text" required=1 /></td>
+						</tr>
+						<tr>
+							<td><label>To: </label><input name="ToCity" id="ToCity" type="text" required=1 /></td>
+							<td rowspan="4"><input value="Submit" type="submit" style="height: 295px;" /></td>
+						</tr>
+						<tr>
+							<td><label>Price: </label><input name="Price" id="Price" type="number" required=1 /></td>
+						</tr>
+						<tr>
+							<td><label># of People: </label><input name="NoOfPpl" id="NoOfPpl" type="number" /></td>
+						</tr>
+						<tr>
+							<td><label>Type: </label><input name="Type" id="Type" type="text" required=1 /></td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+			<!-- not shown -->
+			<div style="display: none;">
+				<input type="radio" name="database_action" value="insert" checked />
+				<label>SubmitTime: </label>
+				<input name="SubmitTime" id="SubmitTime" type="text" />
+				<label>TextArea: </label>
+				<input name="TextArea" id="TextArea" type="text" />
+			</div>
+		</div>
+	</form>
+		<?php  
 
-/* handle drop or insert action */
-if (array_key_exists("database_action", $_POST)){
-	action_on_row_if_ok($conn, $columns, $datatablename, $_POST["database_action"]);
-}
+			set_time_limit(30);
+			$time_start = microtime(true);// Testing script runing time. 
+			// sleep(1);
 
-/* print new result and new form. */
-echo input_form_by_name_attribute($columns, $board, $datatablename);/* Input form */
+			include_once "config.php";
+			include_once "utility_function.php";
+			include_once "show_query_result.php";
 
-/* customized column grab for database. */
-$ca = array();
-foreach($columns as $v){
-    if ($v == "SubmitTime" and False){
-        array_push($ca, "CONVERT_TZ(`SubmitTime`,'+00:00','-04:00') AS SubmitTime"); // convert to U.S. timezone.
-    }else{
-        array_push($ca, "$v");         
-    }
-}
-$ca = join(",", $ca);
+			$conn = connect_to_server($servername, $username, $password); // debug in cofig.php
+			mysqli_select_db($conn, $dbname);                      /* Connect to database */
 
+			/* only difference */
 
-echo '<div id="result_area">';
-$sql = "SELECT $ca FROM `$datatablename` WHERE Type='ask' ORDER BY SubmitTime DESC";
-echo show_query_result_html_table($conn, $sql, "Ask $datatablename");
+			$sql = "SELECT * FROM $datatablename WHERE 0;";
+			$result = $conn->query($sql);
+			$columns = _fetch_fields($result);
 
-// echo p(2);
+			/* handle drop or insert action */
+			if (array_key_exists("database_action", $_POST)){
+				action_on_row_if_ok($conn, $columns, $datatablename, $_POST["database_action"]);
+			}
 
-$sql = "SELECT $ca FROM `$datatablename` WHERE Type='offer' ORDER BY SubmitTime DESC";
-echo show_query_result_html_table($conn, $sql, "Offer $datatablename");
-echo '</div>';
-
-
-// 
-// Step 5: Leave database
-// 
-$conn->close();
+			/* customized column grab for database. */
+			$ca = array();
+			foreach($columns as $v){
+			    if ($v == "SubmitTime" and False){
+			        array_push($ca, "CONVERT_TZ(`SubmitTime`,'+00:00','-04:00') AS SubmitTime"); // convert to U.S. timezone.
+			    }else{
+			        array_push($ca, "$v");         
+			    }
+			}
+			$ca = join(",", $ca);
 
 
-// Testing script runing time. 
-$time_end = microtime(true);
-$time = $time_end - $time_start;
-echo "<br>Process Time: {$time}";
+			echo '<div id="result_area">';
+			$sql = "SELECT $ca FROM `$datatablename` WHERE Type='ask' ORDER BY SubmitTime DESC";
+			echo show_query_result_html_table($conn, $sql, "Ask $datatablename");
+
+			// echo p(2);
+
+			$sql = "SELECT $ca FROM `$datatablename` WHERE Type='offer' ORDER BY SubmitTime DESC";
+			echo show_query_result_html_table($conn, $sql, "Offer $datatablename");
+			echo '</div>';
 
 
-?>
+			// 
+			// Step 5: Leave database
+			// 
+			$conn->close();
+
+
+			// Testing script runing time. 
+			$time_end = microtime(true);
+			$time = $time_end - $time_start;
+			echo "<br>Process Time: {$time}";
+		?>
+
+	</body>
+</html>
+
+
 
 

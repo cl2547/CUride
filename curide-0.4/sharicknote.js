@@ -4,10 +4,29 @@
 // 
 function copy_js(intt, tablename, arr){
 	for (var i = arr.length - 1; i >= 0; i--) {
+		if (arr[i] == "Name"){
+			continue;
+		} else {
 		document.getElementById(arr[i]).value = document.getElementById(intt+tablename+arr[i]).innerHTML;
+			
+		}
 	}
 }
 
+function askofferchange(){
+	var currentvalue = document.getElementById('Type').value ;
+	if (currentvalue == "ask") {
+		document.getElementById('Type').value = "offer";
+		document.getElementById('typebtn').innerHTML = "Current Type :: Offer";
+
+	} else if (currentvalue == "offer") {
+		document.getElementById('Type').value = "ask";
+		document.getElementById('typebtn').innerHTML = "Current Type :: Ask";
+	} else {
+		document.getElementById('Type').value = "ask";
+		document.getElementById('typebtn').innerHTML = "Current Type :: Ask";
+	}
+}
 
 // Part 4
 // 
@@ -107,6 +126,4 @@ function clock() {// We create a new Date object and assign it to a variable cal
 
 }
 setInterval(clock, 1000);
-
-
 

@@ -94,10 +94,10 @@ function sendEmail(){
     Email.send("curide.customerservice@gmail.com",
             des,
             "[DO NOT REPLY] CU Ride: Verification code",
-            "The code is: " +code +"\n\n Yours",
+            "The code is: " +code +"<br><br> Yours",
             "smtp.gmail.com",
-            'curide.customerservice@gmail.com' ,
-            'xiangshiyi');
+            'curide.service@gmail.com' ,
+            'xiangshiyi666');
     // console.log('Done');
   }else{
     alert("Please make sure your email is valid before verification!");
