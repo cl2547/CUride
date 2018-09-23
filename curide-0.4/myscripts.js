@@ -91,13 +91,7 @@ function sendEmail(){
     des = $('#email').val()  //address to send to
     code = generateVerificationCode(); //verification code
     // console.log("test!")
-    Email.send("curide.customerservice@gmail.com",
-            des,
-            "[DO NOT REPLY] CU Ride: Verification code",
-            "The code is: " +code +"<br><br> Yours",
-            "smtp.gmail.com",
-            'curide.service@gmail.com' ,
-            'xiangshiyi666');
+    Email.send();
     // console.log('Done');
   }else{
     alert("Please make sure your email is valid before verification!");
