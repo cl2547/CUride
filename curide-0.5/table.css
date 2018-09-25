@@ -1,0 +1,118 @@
+/*body {
+	background-color: black;
+}*/
+caption, h1, h2{
+	text-align: center;
+}
+
+label {
+	width: 100%;
+	display: inline-block;
+}
+input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+input#Type {
+	width: 7%;
+}
+
+/*input[type="submit"] {
+	background-color: #4CAF50;
+}*/
+
+/*for login*/
+input:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+
+
+table#Ask_board, table#Offer_board {
+	table-layout: fixed;
+	width: 50%;
+	border-collapse: collapse;
+}
+table#Ask_board{
+	float: left;
+}
+table#Offer_board{
+	float: right;
+}
+
+table#Ask_board td, table#Ask_board th, table#Offer_board td, table#Offer_board th {
+	border:solid 0.5px #A9A9A9; 
+}
+table#Ask_board th, table#Offer_board th, button#ask_button, button#offer_button {
+	font-size: 22;
+	color: #FDFEFE;
+}
+ 
+
+table#Ask_board th, button#ask_button{
+	background-color: #616A6B;
+}
+table#Offer_board th, button#offer_button{
+	background-color: #2E86C1;
+}
+
+table#Ask_board td, table#Offer_board td{
+	word-wrap:break-word;
+	text-align: center;
+	/*width: 4%;*/
+    /*height: 94px !important;*/
+    /*background-color: #FFFF00;*/
+}
+
+button.upabove {
+    /*background-color: #4CAF50;*/
+    /*color: white;*/
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    font-size: 24;
+	float: left;
+}
+
+
+
+
+#delete_action_img {
+	width: 32px;
+	height: 42px;
+	padding: 0px 0px;
+	/*padding-left : 20px;*/
+	border: none;
+	float: left;
+}
+
+#copy_action_img {
+	width: 33px;
+	height: 42px;
+	float: left;
+}
+
+#result_area {
+	display: block;
+}
+
+
+
+div#TypeChoice {
+	text-align: center;
+	margin: auto;
+    width: 80%;
+    /*border: 3px solid grey;*/
+    padding: 10px;
+}
+
+div#copydeletebtns {
+	display: inline-block;
+}
