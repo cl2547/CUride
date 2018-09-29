@@ -6,7 +6,7 @@ include_once "utility_function.php";
 // include_once "config.php";
 
 
-function show_query_result_html_table($result, $columnsview, $myname, $tabledisplayname="\$tablename"){
+function show_query_result_html_table($result, $columnsview, $myemail, $tabledisplayname="\$tablename"){
 
 	$_tablename = str_replace(" ", "_", $tabledisplayname);  // The table name used in each <tr id=""> for copy_info js function.
 	
@@ -71,7 +71,7 @@ function show_query_result_html_table($result, $columnsview, $myname, $tabledisp
 					                ');" />'; 
 				
 				// add delete button
-				if ($_SESSION['username'] == $row['Name']){
+				if ($myemail == $row['Email']){
 				    	    
 				    $toReturn .= '	<form action="'.$GLOBALS['rootpath']. $GLOBALS['actionboard'].'" method="post">
                                 	    <fieldset style="display:none;">';
@@ -91,7 +91,7 @@ function show_query_result_html_table($result, $columnsview, $myname, $tabledisp
 		// NO record
 		
 			$toReturn .= '<tr>';
-			for($i = 0; $i < count($columns); $i += 1) {    $toReturn .= '<td>...</td>';    }
+			for($i = 0; $i < count($columnsview); $i += 1) {    $toReturn .= '<td>...</td>';    }
 			$toReturn .= '<td>...</td>'; 
 			$toReturn .= "</tr>";
 		    

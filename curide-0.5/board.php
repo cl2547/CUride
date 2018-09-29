@@ -1,4 +1,30 @@
-<?php session_start(); $myname = $_SESSION['username']; ?>
+<?php 
+	session_start();
+
+	include_once "config.php";
+	include_once "utility_function.php";
+	include_once "show_query_result.php";
+
+
+	$conn = connect_to_server($servername, $username, $password); // debug in cofig.php
+	mysqli_select_db($conn, $dbname); /* Connect to database */
+
+	/* my email */ 
+	$myemail = $_SESSION['user_email']; 
+	$sql = "SELECT username FROM $infotablename 
+			WHERE email='$myemail' ;";
+	$result = $conn->query($sql);
+
+	/* my name */
+	$myname = "";
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			$myname = $row['username'];
+		}
+	} else {
+		$myname = "Name Not Found.";
+	}
+?>
 			
 <html>
 	<head>
@@ -37,8 +63,8 @@
 		</p>
 	</div>
 	<div style="text-align:center;">
-		<button class="upabove" type="button" id="ask_button">Ask board</button>	
-		<button class="upabove" type="button" id="offer_button">Offer board</button>
+		<button class="upabove" type="button" id="offer_button">Offer A Ride</button>
+		<button class="upabove" type="button" id="ask_button">Need A Ride</button>	
     </div>
 	
 	<form action="board.php" id="inputform" method="post">
@@ -49,12 +75,12 @@
 				<label>Name: </label><input name="Name" id="Name" value="<?php echo $myname  ?>" type="text" readonly=1>
 				<label>Phone: </label><input name="Phone" id="Phone" type="text" />
 				<label>Wechat: </label><input name="Wechat" id="Wechat" type="text" />
-				<label>Email:* </label><input name="Email" id="Email" type="email" />
+				<label>Email:* </label><input name="Email" id="Email" value="<?php echo $myemail  ?>" type="email" readonly=1/>
 				<label>Date:* </label><input name="Date" id="Date" type="date" required=1 />
 				<label>Time:* </label><input name="Time" id="Time" type="text" />
 				<label>From:* </label><input name="FromCity" id="FromCity" type="text" required=1 />
 				<label>To:* </label><input name="ToCity" id="ToCity" type="text" required=1 />
-				<label>Price:* </label><input name="Price" id="Price" type="number" required=1 />
+				<label>Price:* (Or just negotiate)</label><input name="Price" id="Price" type="text" value="negotiate" required=1 />
 				<label># of People:* </label><input name="NoOfPpl" id="NoOfPpl" type="number" />
 				<label>Type:* </label>
 				<br><br>
@@ -82,15 +108,6 @@
 			$time_start = microtime(true);// Testing script runing time. 
 			// sleep(1);
 
-			include_once "config.php";
-			include_once "utility_function.php";
-			include_once "show_query_result.php";
-
-			$conn = connect_to_server($servername, $username, $password); // debug in cofig.php
-			mysqli_select_db($conn, $dbname);                      /* Connect to database */
-
-			/* only difference */
-
 			$sql = "SELECT * FROM $datatablename WHERE 0;";
 			$result = $conn->query($sql);
 			$columns = _fetch_fields($result);
@@ -105,7 +122,7 @@
 			foreach($columns as $v){
 			    if ($v == "SubmitTime" and False){
 			        array_push($ca, "CONVERT_TZ(`$v`,'+00:00','-04:00') AS $v"); // convert to U.S. timezone.
-			    }else if ($v == "Price" or $v == "NoOfPpl") {
+			    }else if (False or $v == "NoOfPpl") {
 			    	array_push($ca, "CONVERT($v, UNSIGNED INTEGER) AS $v"); 
 			    } else {
 			        array_push($ca, "$v");         
@@ -121,11 +138,11 @@
 			echo '<div id="result_area">';
 			$sql = "SELECT $ca FROM `$datatablename` WHERE Type='ask' ORDER BY Date ASC, Time ASC";
 			$result = $conn->query($sql);
-			echo show_query_result_html_table($result, $columnsview, $myname, "Ask $datatablename");
+			echo show_query_result_html_table($result, $columnsview, $myemail, "Ask $datatablename");
 
 			$sql = "SELECT $ca FROM `$datatablename` WHERE Type='offer' ORDER BY Date ASC, Time ASC, Price ASC";
 			$result = $conn->query($sql);
-			echo show_query_result_html_table($result, $columnsview, $myname, "Offer $datatablename");
+			echo show_query_result_html_table($result, $columnsview, $myemail, "Offer $datatablename");
 			echo '</div>';
 
 

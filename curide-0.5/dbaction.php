@@ -33,7 +33,7 @@ $columns = _fetch_fields($result);
 /* handle drop or insert action */
 if (array_key_exists("database_action", $_POST)){
 	$sssqqqlll = action_on_row_if_ok($conn, $columns, $datatablename, $_POST["database_action"]);
-	$s = $_GET['username'];
+	// $s = $_GET['username'];
 	header("Location: ". $rootpath . $board );
 }
 

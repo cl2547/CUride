@@ -30,8 +30,8 @@ $toReturn .= '<!DOCTYPE html>
       <input type="text" style="display: none" name="fromtype" value="login">
       
       
-    <label for="uname"><b>Username / Email</b></label>
-    <input type="text" placeholder="Enter Username" name="uname" required>
+    <label for="uname"><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" name="uname" required>
 
     <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="psw" required>
@@ -51,10 +51,9 @@ $toReturn .= '
 <!-- for sign up -->
 <div id="id01" class="modal">
   <span onclick="document.getElementById(\'id01\').style.display=\'none\'" class="close" title="Close Modal">&times;</span>
-  <form class="modal-content" action="    ' . $actionface . '    
-
-" method="POST">
-          <!--dummy -->
+  <form class="modal-content" action="    ' . $actionface . '    " method="POST">
+      
+      <!--dummy -->
       <input type="text" style="display: none" name="fromtype" value="signup">
     
     <div class="container">
@@ -66,18 +65,24 @@ $toReturn .= '
 
       <label for="email"><b>Email</b></label>
       <input type="text" placeholder="Enter Email" id = "email" name="email" required>
+
       <div class="registrationFormAlert" id="result"></div>
 
-      <button type="button" class="verifybtn" onclick="sendEmail()">Verify (Please check your email and enter the verfication code. You need to verify your email to continue.)</button>
+      <button type="button" class="verifybtn" onclick="sendEmail()">Verify (Please check your email and enter the verfication code. You need to verify your email to continue.)
+      </button>
+      
       <label for="Verification code"><b>Verifcation Code</b></label><p style="display:none" id = "code"></p>
       <input type="text" placeholder="Enter Verificatoin Code" id = "verificationCode" name="verificationCode" required>
+      
       <div class="registrationFormAlert" id="divCheckVerificationCodeMatch"></div>
+      
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
 
       <label for="psw-repeat"><b>Repeat Password</b></label>
       <input type="password" placeholder="Repeat Password" id="psw-repeat" name="psw-repeat" required>
       <div class="registrationFormAlert" id="divCheckPasswordMatch"></div>
+      
       <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
 
       <div class="clearfix">
@@ -91,7 +96,7 @@ $toReturn .= '
 </body>
 </html>  ';
 
-
+// print_r($_SESSION);
 echo $toReturn;
 
- ?>
+?>

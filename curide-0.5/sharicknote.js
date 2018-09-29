@@ -4,7 +4,7 @@
 // 
 function copy_js(intt, tablename, arr){
 	for (var i = arr.length - 1; i >= 0; i--) {
-		if (arr[i] == "Name"){
+		if (arr[i] == "Name" || arr[i] == "Email"){
 			continue;
 		} else {
 		document.getElementById(arr[i]).value = document.getElementById(intt+tablename+arr[i]).innerHTML;
