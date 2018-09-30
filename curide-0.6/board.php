@@ -29,7 +29,7 @@
 <html>
 	<head>
 		<meta http-equiv="refresh" content="200 URL=./board.php">
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
 		<link rel="stylesheet" href="table.css">
 		<h1>CU Ride Information Exchange [Still Testing]</h1>
 	</head>
