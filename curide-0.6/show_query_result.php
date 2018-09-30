@@ -1,11 +1,12 @@
 <?php
 
+// session_start();
+
 include_once "utility_function.php";
+// include_once "config.php";
 
 
-function show_query_result_html_table($conn, $sql, $tabledisplayname="\$tablename"){
-    // ------------ Database Action ----------------------
-	$result = $conn->query($sql);
+function show_query_result_html_table($result, $columnsview, $myemail, $tabledisplayname="\$tablename"){
 
 	$_tablename = str_replace(" ", "_", $tabledisplayname);  // The table name used in each <tr id=""> for copy_info js function.
 	
@@ -21,26 +22,11 @@ function show_query_result_html_table($conn, $sql, $tabledisplayname="\$tablenam
 	// For successful SELECT, SHOW, DESCRIBE or EXPLAIN queries mysqli_query() will return a mysqli_result object. 
 		$toReturn = "";
 		$columns = _fetch_fields($result); 		// $columns must be exist for select, ... statement.
-
-
-		$columnsview = array("Name", "Email", "Date", "Time", "FromCity", "ToCity", "Price");
-		// if (strpos($tabledisplayname, 'Ask') !== false) {
-		// 	$columnsview = $columnsview;
-		// } elseif (strpos($tabledisplayname, 'Offer') !== false){
-		// 	$columnsview = array_reverse($columnsview);
-		// } else {
-		// 	echo "Fatlal Error!";
-		// 	return "Fatlal Error!";
-		// }
-
-
-        // print_r($columnsview);
-
 		
 	// Print table name, head
 		$toReturn .= '<table id="'.$_tablename.'"><thead>
 						<caption>'.
-						'<h2 id="'.$_tablename.'">'. $tabledisplayname .' ('. $result->num_rows .' rows) </h2>'.
+						'<h2 id="'.$_tablename.'">'. $tabledisplayname .' ('. $result->num_rows .' choices) </h2>'.
 						'</caption>';
 
 	// Print Table Columns Names (Attributes)
@@ -49,15 +35,13 @@ function show_query_result_html_table($conn, $sql, $tabledisplayname="\$tablenam
 
 		$j = 0; // -- Sort Table by Clicking the Headers
 		foreach ($columnsview as $key => $value) {
-			$toReturn .= '<th onclick="sortTable('._add_quotes_valuescript($_tablename).','.$j.')">' . $value . '</th>'; 
+			$toReturn .= '<th onclick="sortTable('._add_quotes_valuescript($_tablename).','.$j.')">' . column_alias($value) . '</th>'; 
 			$j += 1;
 		}
 
 	// Print copy info button.
+		$toReturn .= '<th></th></tr></thead>';
 		
-		$toReturn .= '<th>CopyInfo</th>'; 
-
-		$toReturn .= '</tr></thead>';//headline
 
 	// Print Table Content
 		$toReturn .= '<tbody>';
@@ -79,16 +63,17 @@ function show_query_result_html_table($conn, $sql, $tabledisplayname="\$tablenam
 
 				// add copy_info button
 				$arr_val = "[".join(",", array_map('_add_quotes_valuescript', $columnsview))."]";
-				$toReturn .= '<td width="5%">
+				$toReturn .= '<td>
+				<div id="copydeletebtns">
 					<img src="'.$GLOBALS['rootpath'].'/Edit.png" id="copy_action_img" align="left" onclick="
 					                copy_js('.
 											join(',', array(trim($i), _add_quotes_valuescript($_tablename), $arr_val) ).
 					                ');" />'; 
 				
 				// add delete button
-				if ($_GET['username'] == $row['Name']){
+				if (strtolower($myemail) == strtolower($row['Email'])){
 				    	    
-				    $toReturn .= '	<form action="'.$GLOBALS['rootpath'].'dbaction.php?username='.$_GET['username'].'" method="post">
+				    $toReturn .= '	<form action="'.$GLOBALS['rootpath']. $GLOBALS['actionboard'].'" method="post">
                                 	    <fieldset style="display:none;">';
                     $toReturn .=            $dummyinputform;
                     $toReturn .= '          <input type="radio" name="database_action" value="drop" checked/>
@@ -96,6 +81,7 @@ function show_query_result_html_table($conn, $sql, $tabledisplayname="\$tablenam
                                 	    <input type="image" id="delete_action_img" src="'.$GLOBALS['rootpath'].'/Delete.png" alt="Submit Form" />
                                     </form>';                
 				} 
+				$toReturn .= "</div>";
 				
 				$toReturn .= "</td></tr>";
 				$i += 1;
@@ -105,7 +91,7 @@ function show_query_result_html_table($conn, $sql, $tabledisplayname="\$tablenam
 		// NO record
 		
 			$toReturn .= '<tr>';
-			for($i = 0; $i < count($columns); $i += 1) {    $toReturn .= '<td>...</td>';    }
+			for($i = 0; $i < count($columnsview); $i += 1) {    $toReturn .= '<td>...</td>';    }
 			$toReturn .= '<td>...</td>'; 
 			$toReturn .= "</tr>";
 		    

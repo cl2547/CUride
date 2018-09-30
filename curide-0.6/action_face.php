@@ -1,12 +1,19 @@
 <?php
 
+/*
+$loginvar = ['uname', 'psw'];
+$signupvar = ['name', 'email', 'verificationCode', 'psw', 'psw-repeat'] ;
+*/
+
+
+
 session_start();
 
 include_once "show_query_result.php";
 include_once "tablename_var.php";
 include_once "config.php";
 
-$infocolumns = ["username", "password", "verificationCode"];
+$infocolumns = ["email", "username", "password"];
 
 $conn = connect_to_server($servername, $username, $password); // debug == false
 mysqli_select_db($conn, $dbname);                      /* Connect to database */
@@ -18,9 +25,9 @@ $fromtype = $_POST['fromtype'];
 if ($fromtype == "login"){
 // login page	
     
-    $uname = $_POST['uname'];
+    $email_form = $_POST['uname'];
 	$sql = "SELECT password FROM $infotablename 
-			WHERE username='$uname' ;";
+			WHERE email='$email_form' ;";
 
     $result = $conn->query($sql);
 	if ($result->num_rows > 0) {
@@ -29,7 +36,7 @@ if ($fromtype == "login"){
 		 	array_push($psws, $row['password']);
 		}
 		if (in_array($_POST['psw'], $psws)){
-			$_SESSION['username'] = $uname;
+			$_SESSION['user_email'] = $email_form;
 		    header('Location: '. $rootpath . $board );
 		    // no message, login success.
 		} else {
@@ -44,21 +51,20 @@ if ($fromtype == "login"){
 } else if ($fromtype == "signup") {
 // signup page
 
-	$nickname = $_POST['name'];
-    $uname = $_POST['email'];
-    $psw = $_POST['psw'];
-    $vcode = $_POST['verificationCode'];
+    $email_form = $_POST['email'];
+	$username_form = $_POST['name'];
+    $password_form = $_POST['psw'];
 
     $sql = "SELECT * FROM $infotablename 
-    		WHERE username='$uname' ;";
+    		WHERE email='$email_form' ;";
 
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         header('Location: '. $rootpath . $face . '?message=3');
         // message = 3; sign up failure, email already exists. 
 	} else {
-    	$sql = "INSERT INTO `$infotablename` (username, password, verificationCode) 
-    			VALUES ( '$uname', '$psw', '$vcode');";
+    	$sql = "INSERT INTO `$infotablename` (email, username, password) 
+    			VALUES ( '$email_form', '$username_form', '$password_form');";
         $result = $conn->query($sql);
         header('Location: '. $rootpath . $face . '?message=2');
         // message = 2, sign up success.
@@ -68,8 +74,6 @@ if ($fromtype == "login"){
 
 }
 
-$loginvar = ['uname', 'psw'];
-$signupvar = ['name', 'email', 'verificationCode', 'psw', 'psw-repeat'] ;
 
 $conn->close();
 

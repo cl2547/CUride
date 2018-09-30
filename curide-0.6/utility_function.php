@@ -27,7 +27,7 @@ function _add_quotes($symbol, $strr){ return $symbol . $strr . $symbol; }
 function _add_quotes_tablescript($strr){ return _add_quotes("`", $strr); }
 function _add_quotes_valuescript($strr){ return _add_quotes("'", $strr); }
 function _add_quotes_doublescript($strr){ return _add_quotes("\"", $strr); }
-function _get_value_post($key){ return $_POST[$key]; }
+function _get_value_post($key){ return $_POST[$key]; } 
 function column_names($columns){ return join(",", array_map('_add_quotes_tablescript', $columns)); }
 function column_values($columns){ 
 	$v = array_map('_get_value_post', $columns); 
@@ -320,6 +320,54 @@ function showResultInfo($result, $rowslimit=20, $rowfractionlimit=1){
 	}	
 }
 
+
+function column_alias($name){
+	switch ($name) {
+		case "Name":
+			return "Name";
+			break;
+		case "Phone":
+			return "Phone";
+			break;
+		case "Wechat":
+			return "Wechat";
+			break;
+		case "Email":
+			return "Email";
+			break;
+		case "Date":
+			return "Date";
+			break;
+		case "Time":
+			return "Time";
+			break;
+		case "FromCity":
+			return "From";
+			break;
+		case "ToCity":
+			return "To";
+			break;
+		case "Price":
+			return "Price";
+			break;
+		case "NoOfPpl":
+			return "People";
+			break;
+		case "Type":
+			return "Type";
+			break;
+		case "SubmitTime":
+			return "Submited Time";
+			break;
+		case "Textarea":
+			return "Notes";
+			break;
+		default:
+			echo "[Warning] Current Name has no alias." . p(1);
+			return $name;
+	}
+	return $name; 
+}
 
 
 ?>

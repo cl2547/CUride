@@ -86,16 +86,36 @@ window.onload = function() {
 
 //send email verificateion
 function sendEmail(){
+  //first disable the button for few seconds to avoid too many clickings
+  var fewSeconds = 5;
+  var btn = $(".verifybtn");
+  btn.css("background-color", "#474e5d");
+  setTimeout(function(){
+      btn.prop('.disabled', false);
+      btn.css("background-color", "#4CAF50");
+  }, fewSeconds*1000);
+
   var email = $("#email").val();
-  if (validateEmail(email)){
+  if (!btn.prop(".disabled")){
+    if (validateEmail(email)){
     des = $('#email').val()  //address to send to
     code = generateVerificationCode(); //verification code
     // console.log("test!")
-    Email.send();
+    Email.send("curide.customerservice@gmail.com",
+            des,
+            "[DO NOT REPLY] CU Ride: Verification code",
+            "The code is: " +code +"<br><br> Yours",
+            "smtp.gmail.com",
+            'curide.service@gmail.com');
     // console.log('Done');
+    }else{
+      alert("Please make sure your email is valid before verification!");
+    }
   }else{
-    alert("Please make sure your email is valid before verification!");
+    alert("Please wait for a few seconds for the verfication email to arrive!");
   }
+
+  btn.prop('.disabled', true);
 }
 
 

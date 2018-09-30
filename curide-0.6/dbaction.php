@@ -32,22 +32,10 @@ $columns = _fetch_fields($result);
 
 /* handle drop or insert action */
 if (array_key_exists("database_action", $_POST)){
-	action_on_row_if_ok($conn, $columns, $datatablename, $_POST["database_action"]);
-	$s = $_GET['username'];
-	header("Location: ".$rootpath."index.php?username=$s");
+	$sssqqqlll = action_on_row_if_ok($conn, $columns, $datatablename, $_POST["database_action"]);
+	// $s = $_GET['username'];
+	header("Location: ". $rootpath . $board );
 }
-
-echo "
-<pre>
-
-
-Copyright Issue.
-Sharick Xiang
-2017-02-08
-
-
-</pre>
-";
 
 // 
 // Step 5: Leave database

@@ -1,0 +1,145 @@
+/**
+ *
+ * Caption,  h1, h2
+ *
+ */
+caption, h1, h2{
+	text-align: center;
+}
+
+/**
+ *
+ * label
+ *
+ */
+label {
+	width: 100%;
+	display: inline-block;
+}
+
+/**
+ *
+ * input
+ *
+ */
+
+input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+input#Type {
+	width: 7%;
+}
+
+input[type=submit] {
+	background-color: #2E86C1;
+	color: #FDFEFE;
+}
+
+input:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+
+/**
+ *
+ * table
+ *
+ */
+table {
+	/*table-layout: fixed;*/
+	/*width: 50%;*/
+	border-collapse: collapse;
+}
+
+table th {
+	/*font-size: 22;*/
+	border:solid 0.5px #A9A9A9; 
+	color: #FDFEFE;
+	background-color: #2E86C1;
+}
+
+table td {
+	/*word-wrap:break-word;*/
+	/*width: 4%;*/
+    /*height: 94px !important;*/
+	border:solid 0.5px #A9A9A9; 
+	text-align: center;
+}
+
+/**
+ *
+ * button
+ *
+ */
+button#ask_button{
+	background-color: #616A6B;
+	color: #FDFEFE;
+}
+
+button#offer_button{
+	background-color: #2E86C1;
+	color: #FDFEFE;
+}
+
+button.upabove {
+    /*background-color: #4CAF50;*/
+    /*color: white;*/
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    font-size: 24;
+	float: left;
+}
+
+/**
+ *
+ * div
+ *
+ */
+div#TypeChoice {
+	text-align: center;
+	margin: auto;
+    width: 80%;
+    /*border: 3px solid grey;*/
+    padding: 10px;
+}
+
+div#copydeletebtns {
+	display: inline-block;
+}
+
+
+/**
+ *
+ * Other id(s)
+ *
+ */
+#delete_action_img {
+	width: 32px;
+	height: 42px;
+	padding: 0px 0px;
+	/*padding-left : 20px;*/
+	border: none;
+	float: left;
+}
+
+#copy_action_img {
+	width: 33px;
+	height: 42px;
+	float: left;
+}
+
+#result_area {
+	display: block;
+}
+
+
